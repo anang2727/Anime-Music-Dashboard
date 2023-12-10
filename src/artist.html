@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html :class="{ 'theme-dark': dark }" x-data="data()" lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Animelodic</title>
+    <link rel="stylesheet" href="/dist/output.css" />
+    <link rel="stylesheet" href="/node_modules/aos/dist/aos.js">
+    <link rel="stylesheet" href="/node_modules/aos/dist/aos.css">
+    <!-- Tautan ke berkas JavaScript AOS -->
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <!-- Tautan ke berkas CSS AOS (Opsional) -->
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="/font/css/all.min.css" />
+    <!-- npx tailwindcss -i ./src/input.css -o ./dist/output.css --watch -->
+    <link rel="stylesheet" href="./assets/css/tailwind.output.css" />
+    <script src="./assets/js/init-alpine.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"defer></script>
+    <script src="./assets/js/charts-lines.js" defer></script>
+    <script src="./assets/js/charts-pie.js" defer></script>
+  </head>
+  <body>
+    <div class="flex h-screen bg-gray-50 dark:bg-gray-900" :class="{ 'overflow-hidden': isSideMenuOpen }" >
+      <!-- Desktop sidebar -->
+      <aside class="z-20 hidden w-64 shadow-lg overflow-y-auto bg-white dark:bg-gray-800 md:block flex-shrink-0">
+        <div class="py-4 text-gray-500 dark:text-gray-400">
+          <a class="ml-6 text-lg font-bold text-gray-800 dark:text-gray-200" href="#">Animelodic</a>
+          <ul class="mt-6">
+            <li class="relative px-6 py-3">
+              <span class="absolute inset-y-0 left-0 w-1 bg-blue-900 rounded-tr-lg rounded-br-lg" aria-hidden="true" ></span>
+              <a class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100" href="index.html">
+                <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+                  <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+                </svg>
+                <span class="ml-4">Dashboard</span>
+              </a>
+            </li>
+          </ul>
+          <ul>
+            <li class="relative px-6 py-3">
+              <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200" href="artist.html">
+                <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></
+                </svg>
+                <span class="ml-4">Artist</span>
+              </a>
+            </li>
+            <li class="relative px-6 py-3">
+              <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"href="cards.html">
+                <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+                  <path d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+                </svg>
+                <span class="ml-4">Playlist</span>
+              </a>
+            </li>
+            <li class="relative px-6 py-3">
+              <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200" href="modals.html">
+                <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                <span class="ml-4">Setting</span>
+              </a>
+            </li>
+            <li class="relative px-6 py-3">
+              <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200" href="charts.html">                
+                <svg  xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-info"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                <span class="ml-4">Info</span>
+              </a>
+            </li>
+            <li class="relative px-6 py-3">
+              <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200" href="./pages/login.html">
+              <svg class="w-4 h-4 mr-3" aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor"> <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+              <span>Logout</span>
+             </a>
+            </li>
+          </ul>
+        </div>
+      </aside>
+      <!-- Mobile sidebar -->
+      <!-- Backdrop -->  
+      <div
+        x-show="isSideMenuOpen"
+        x-transition:enter="transition ease-in-out duration-150"
+        x-transition:enter-start="opacity-0"
+        x-transition:enter-end="opacity-100"
+        x-transition:leave="transition ease-in-out duration-150"
+        x-transition:leave-start="opacity-100"
+        x-transition:leave-end="opacity-0"
+        class="fixed inset-0 z-10 flex items-end bg-black bg-opacity-50 sm:items-center sm:justify-center"
+      ></div>
+      <aside
+        class="fixed inset-y-0 z-50 flex-shrink-0 w-64 mt-16 overflow-y-auto bg-white dark:bg-gray-800 md:hidden"
+        x-show="isSideMenuOpen"
+        x-transition:enter="transition ease-in-out duration-150"
+        x-transition:enter-start="opacity-0 transform -translate-x-20"
+        x-transition:enter-end="opacity-100"
+        x-transition:leave="transition ease-in-out duration-150"
+        x-transition:leave-start="opacity-100"
+        x-transition:leave-end="opacity-0 transform -translate-x-20"
+        @click.away="closeSideMenu"
+        @keydown.escape="closeSideMenu">
+        <div class="py-4 text-gray-500 dark:text-gray-400">
+          <a class="ml-6 text-lg font-bold text-gray-800 dark:text-gray-200"href="#">Animelodic</a>
+          <ul class="mt-6">
+            <li class="relative px-6 py-3">
+              <span class="absolute inset-y-0 left-0 w-1 bg-blue-900 rounded-tr-lg rounded-br-lg" aria-hidden="true"></span>
+              <a class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100" href="index.html">
+                <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+                  <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+                </svg>
+                <span class="ml-4">Dashboard</span>
+              </a>
+            </li>
+          </ul>
+          <ul>
+            <li class="relative px-6 py-3">
+              <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200" href="artist.html">
+                <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></
+                </svg>
+                <span class="ml-4">Artist</span>
+              </a>
+            </li>
+            <li class="relative px-6 py-3">
+              <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"href="cards.html">
+                <svg class="w-5 h-5" aria-hidden="true" fill="none" viewBox="0 0 24 24" stroke="currentColor" >
+                  <path fill-rule="evenodd" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+                </svg>
+                <span class="ml-4">Playlist</span>
+              </a>
+            </li>
+            <li class="relative px-6 py-3">
+              <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200" href="modals.html">
+                <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                <span class="ml-4">Setting</span>
+              </a>
+            </li>
+            <li class="relative px-6 py-3">
+              <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200" href="charts.html">                
+                <svg  xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-info"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                <span class="ml-4">Info</span>
+              </a>
+            </li>
+            <li class="relative px-6 py-3">
+              <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200" href="/src/pages/login.html">
+              <svg class="w-4 h-4 mr-3" aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor"> <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+              <span>Logout</span>
+             </a>
+            </li>
+            <li class="md:hidden px-6 ">
+              <div  class="h4 w-full mt-5 items-end md:flex gap-5 ">
+                <div class="shadow-sm bg-blue-500 md:w-1/2 mx-auto cursor-pointer text-center p-3 active:scale-95  transition-all rounded-lg">
+                  <p class="text-white font-[poppins] text-xs">Update to</p>
+                  <h1 class="text-xl font-semibold font-[poppins]  text-white">PREMIUM</h1>
+                  <p class="text-white text-sm font-[poppins]">Discount 30%</p>
+                  <p  class="text-white font-[poppins] text-[10px]">Keep working on your music scores even without an internet connection</p>
+                </div>
+                <div class="shadow-sm bg-yellow-500 mt-4 md:w-1/2 mx-auto cursor-pointer text-center p-3 active:scale-95  transition-all rounded-lg">
+                  <p class="text-white font-[poppins] text-xs">Update to</p>
+                  <h1 class="text-xl font-semibold font-[poppins]  text-white">SPECIAL</h1>
+                  <p class="text-white text-sm font-[poppins]">Discount 30%</p>
+                  <p  class="text-white font-[poppins] text-[10px]">Keep working on your music scores even without an internet connection</p>
+                </div>
+           
+              </div>
+            </li>
+      
+          
+          </ul>
+         
+        </div>
+      </aside>
+      <div class="flex flex-col flex-1 w-full">
+        <header class="z-10 py-4 bg-white shadow-md dark:bg-gray-800">
+          <div class="container flex items-center justify-between h-full px-6 mx-auto text-blue-900 dark:text-blue-900">
+            <!-- Mobile hamburger -->
+            <button class="p-1 mr-5 -ml-1 rounded-md md:hidden focus:outline-none focus:shadow-outline-purple" @click="toggleSideMenu" aria-label="Menu">
+              <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" >
+                <path
+                  fill-rule="evenodd"
+                  d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                  clip-rule="evenodd"></path>
+              </svg>
+            </button>
+            <!-- Search input -->
+            <div class="flex justify-center flex-1 lg:mr-32">
+              <div
+                class="relative w-full max-w-xl mr-6 focus-within:text-blue-900"
+              >
+                <div class="absolute inset-y-0 flex items-center pl-2">
+                  <svg class="w-4 h-4" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" >
+                    <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
+                  </svg>
+                </div>
+                <input
+                id="searchInput" 
+                class="w-full pl-8 pr-2 text-sm text-gray-700 placeholder-gray-600 bg-gray-100 border-0 rounded-md dark:placeholder-gray-500 dark:focus:shadow-outline-gray dark:focus:placeholder-gray-600 dark:bg-gray-700 dark:text-gray-200 focus:placeholder-gray-500 focus:bg-white focus:border-purple-300 focus:outline-none focus:shadow-outline-purple form-input"
+                type="text"
+                placeholder="Search for projects"
+                aria-label="Search"
+                onkeyup="searchData()"
+                oninput="searchData()"/>
+            
+              
+
+              </div>
+            </div>
+            <ul class="flex items-center flex-shrink-0 space-x-6">
+              <!-- Theme toggler -->
+              <li class="flex">
+                <button
+                  class="rounded-md focus:outline-none focus:shadow-outline-purple"
+                  @click="toggleTheme"
+                  aria-label="Toggle color mode"
+                >
+                  <template x-if="!dark">
+                    <svg
+                      class="w-5 h-5"
+                      aria-hidden="true"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
+                      <path
+                        d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
+                      ></path>
+                    </svg>
+                  </template>
+                  <template x-if="dark">
+                    <svg
+                      class="w-5 h-5"
+                      aria-hidden="true"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
+                        clip-rule="evenodd"
+                      ></path>
+                    </svg>
+                  </template>
+                </button>
+              </li>
+              
+
+            </ul>
+          </div>
+        </header>
+        <main class="h-full overflow-y-auto mt-6">
+          <div class="container px-6 mx-auto grid">
+            <section id="header">
+
+
+            <section class="md:flex md:gap-20">
+              <div class="w-full  ">
+                <div class="md:grid md:grid-cols-2 gap-5 md:items-start">
+                  
+            
+                 <!-- Artist  -->
+                  
+                 <div class=" w-full  h-auto hidden md:block ">
+                  <div class="flex justify-between items-end">
+                    <h2 class="dark:text-white text-lg font-[poppins]">Artist</h2>
+                    <span class="dark:text-white text-sm font-light font-[poppins] "><a class="hover:text-sky-300" href="#">See More</a></span>
+                  </div>
+                  <div class="flex flex-wrap gap-4 justify-between my-4 relative">
+                    <!-- Card 1 -->
+                    <div class="flex-shrink-0 w-32 bg-blue-500 relative cursor-pointer hover:scale-105 transition-all">
+                      <div class="h-24 relative  bg-cover" style="background-image: linear-gradient(to top, rgba(0, 0, 0, 1), rgba(36, 35, 35, 0)), url('/src/assets/img/Mask group.svg');">
+                        <div class="flex items-center justify-center absolute bottom-0 left-0 w-full opacity-70 py-1 bg-blue-800" style="background-image: linear-gradient(to top, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0));">
+                          <i class="fas fa-list text-white"></i>
+                        </div>
+                      </div>
+                      <h4 class="text-[11px] font-normal text-white mt-2 ml-1 absolute bottom-6 left-0">Lisa</h4>
+                    </div>
+                    <!-- Card 2 -->
+                    <div class="flex-shrink-0 w-32 bg-blue-500 relative cursor-pointer hover:scale-105 transition-all">
+                      <div class="h-24 relative  bg-cover" style="background-image: linear-gradient(to top, rgba(0, 0, 0, 1), rgba(36, 35, 35, 0)), url('/src/assets/img/Mask group.svg');">
+                        <div class="flex items-center justify-center absolute bottom-0 left-0 w-full opacity-70 py-1 bg-blue-800" style="background-image: linear-gradient(to top, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0));">
+                          <i class="fas fa-list text-white"></i>
+                        </div>
+                      </div>
+                      <h4 class="text-[11px] font-normal text-white mt-2 ml-1 absolute bottom-6 left-0">Linked Horizon</h4>
+                    </div>
+                    <!-- Card 3 -->
+                    <div class="flex-shrink-0 w-32 bg-blue-500 relative cursor-pointer hover:scale-105 transition-all">
+                      <div class="h-24 relative  bg-cover" style="background-image: linear-gradient(to top, rgba(0, 0, 0, 1), rgba(36, 35, 35, 0)), url('/src/assets/img/Mask group.svg');">
+                        <div class="flex items-center justify-center absolute bottom-0 left-0 w-full opacity-70 py-1 bg-blue-800" style="background-image: linear-gradient(to top, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0));">
+                          <i class="fas fa-list text-white"></i>
+                        </div>
+                      </div>
+                      <h4 class="text-[11px] font-normal text-white mt-2 ml-1 absolute bottom-6 left-0">Aimer</h4>
+                    </div>
+                    <!-- Card 4 -->
+                    <div class="flex-shrink-0 w-32 bg-blue-500 relative cursor-pointer hover:scale-105 transition-all">
+                      <div class="h-24 relative  bg-cover" style="background-image: linear-gradient(to top, rgba(0, 0, 0, 1), rgba(36, 35, 35, 0)), url('/src/assets/img/Mask group.svg');">
+                        <div class="flex items-center justify-center absolute bottom-0 left-0 w-full opacity-70 py-1 bg-blue-800" style="background-image: linear-gradient(to top, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0));">
+                          <i class="fas fa-list text-white"></i>
+                        </div>
+                      </div>
+                      <h4 class="text-[11px] font-normal text-white mt-2 ml-1 absolute bottom-6 left-0">Sekai No Owari</h4>
+                    </div>          
+
+                  </div>
+                  
+                 
+                </div>
+                <!-- End Artist  -->
+              </div>
+
+              </div>
+            </section>
+          </section>
+         
+        </main>
+      </div>
+    </div>
+    <script src="/src/assets/js/app.js"></script>
+    <script src="/node_modules/alpinejs/src/alpine.js"></script>
+    <script src="/node_modules/alpinejs/dist/cdn.min.js"></script>
+    <script>
+     function searchData() {
+    let input, filter, ul, li, i, txtValue, found;
+    input = document.getElementById('searchInput');
+    filter = input.value.toUpperCase();
+    ul = document.getElementById('dataList');
+    li = ul.getElementsByTagName('li');
+    found = false;
+
+    if (filter === "") {
+        for (i = 0; i < li.length; i++) {
+            li[i].style.display = '';
+        }
+        
+        // Kembalikan tampilan semua elemen audio
+        const audioElements = document.querySelectorAll('audio');
+        audioElements.forEach(audio => audio.style.display = 'block');
+        
+        return;
+    }
+
+    for (i = 0; i < li.length; i++) {
+        txtValue = li[i].textContent || li[i].innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            li[i].style.display = '';
+            found = true;
+        } else {
+            li[i].style.display = 'none';
+        }
+    }
+
+    const noDataMessage = document.getElementById('noDataMessage');
+    if (found) {
+        noDataMessage.style.display = 'none';
+    } else {
+        noDataMessage.style.display = 'block';
+    }
+}
+
+
+    </script>
+    
+    <script>
+      let currentSlide = 0;
+      const slides = document.querySelectorAll('.carousel-slide');
+      const totalSlides = slides.length;
+
+      function showSlide(slideIndex) {
+          if (slideIndex < 0) {
+              slideIndex = totalSlides - 1;
+          }
+          if (slideIndex >= totalSlides) {
+              slideIndex = 0;
+          }
+
+          slides.forEach((slide) => {
+              slide.classList.add('hidden');
+          });
+
+          slides[slideIndex].classList.remove('hidden');
+          currentSlide = slideIndex;
+      }
+
+      function prevSlide() {
+          showSlide(currentSlide - 1);
+      }
+
+      function nextSlide() {
+          showSlide(currentSlide + 1);
+      }
+
+      // Tampilkan slide pertama saat halaman dimuat
+      showSlide(currentSlide);
+
+      // Ganti slide setiap 3 detik (3000ms)
+      setInterval(() => {
+          nextSlide();
+      }, 3000);
+
+      //
+      function showTitle(slideNumber) {
+    const titleElement = document.getElementById(`title${slideNumber}`);
+    titleElement.style.display = 'block';
+}
+
+function hideTitle(slideNumber) {
+    const titleElement = document.getElementById(`title${slideNumber}`);
+    titleElement.style.display = 'none';
+}
+
+  </script>
+  </body>
+  <style>
+    /*  */
+    .carousel-slide {
+    position: relative;
+}
+
+.carousel-image {
+    width: 100%; /* Mengisi seluruh lebar */
+    height: 100%; /* Menyesuaikan tinggi sesuai aspek gambar */
+}
+
+.carousel-title {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 8px 12px;
+    /* text-align: center; */
+}
+
+
+
+     /* Media query untuk mode tampilan mobile */
+
+    /* CSS Styles */
+    .carousel-container {
+            overflow: hidden;
+        }
+
+        .carousel-slide {
+            scroll-snap-align: start;
+        }
+
+        .carousel-image {
+            width: 100%;
+            height: 100%; /* Atur tinggi gambar menjadi 100% untuk mengisi tinggi container */
+        }
+    .download-info {
+      display: none;
+      align-items: center;
+      background-color: #f0f0f0;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      margin-top: 10px;
+    }
+  
+    .visible {
+      display: block;
+    }
+  </style>
+  
+  
+</html>

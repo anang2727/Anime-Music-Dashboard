@@ -29,6 +29,12 @@
             });
         });
 
+        //
+
+        // JavaScript
+  
+        //
+
         toggleButtons.forEach((button) => {
             const audioId = button.getAttribute("data-audio");
             const audio = document.getElementById(audioId);
